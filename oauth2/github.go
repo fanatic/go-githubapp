@@ -19,7 +19,7 @@ import (
 
 	"golang.org/x/oauth2"
 
-	"github.com/palantir/go-githubapp/githubapp"
+	"github.com/fanatic/go-githubapp/githubapp"
 )
 
 const (
