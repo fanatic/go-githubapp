@@ -28,5 +28,6 @@ type Config struct {
 	OAuth struct {
 		ClientID     string `yaml:"client_id" json:"clientId"`
 		ClientSecret string `yaml:"client_secret" json:"clientSecret"`
+		RedirectURL  string `yaml:"redirect_url" json:"redirectURL"`
 	} `yaml:"oauth" json:"oauth"`
 }
