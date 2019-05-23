@@ -35,6 +35,7 @@ func GetConfig(c githubapp.Config, scopes []string) *oauth2.Config {
 			TokenURL: joinURL(c.WebURL, "/login/oauth/access_token"),
 		},
 		Scopes: scopes,
+		RedirectURL: c.OAuth.RedirectURL,
 	}
 }
 
