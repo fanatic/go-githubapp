@@ -128,7 +128,6 @@ func OnLogin(c LoginCallback) Param {
 func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// copy config for modification
 	conf := *h.config
-	conf.RedirectURL = redirectURL(r, h.forceTLS)
 
 	// if the provider returned an error, abort the processes
 	if r.FormValue(queryError) != "" {
@@ -175,22 +174,4 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func isInitial(r *http.Request) bool {
 	return r.FormValue(queryCode) == ""
-}
-
-func redirectURL(r *http.Request, forceTLS bool) string {
-	u := *r.URL
-	u.Host = r.Host
-
-	if forceTLS || r.TLS != nil {
-		u.Scheme = "https"
-	} else {
-		u.Scheme = "http"
-	}
-
-	q := u.Query()
-	q.Del(queryCode)
-	q.Del(queryState)
-	u.RawQuery = q.Encode()
-
-	return u.String()
 }
