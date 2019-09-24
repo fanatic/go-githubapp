@@ -19,7 +19,7 @@ import (
 
 	"golang.org/x/oauth2"
 
-	"github.com/fanatic/go-githubapp/githubapp"
+	"github.com/google/go-github/v28/github/githubapp"
 )
 
 const (
@@ -34,7 +34,7 @@ func GetConfig(c githubapp.Config, scopes []string) *oauth2.Config {
 			AuthURL:  joinURL(c.WebURL, "/login/oauth/authorize"),
 			TokenURL: joinURL(c.WebURL, "/login/oauth/access_token"),
 		},
-		Scopes: scopes,
+		Scopes:      scopes,
 		RedirectURL: c.OAuth.RedirectURL,
 	}
 }
