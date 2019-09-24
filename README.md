@@ -7,16 +7,16 @@ The library provides an `http.Handler` implementation that dispatches webhook
 events to the correct place, removing boilerplate and letting you focus on the
 logic of your application.
 
-* [Usage](#usage)
-  + [Examples](#examples)
-  + [Dependencies](#dependencies)
-* [Structured Logging](#structured-logging)
-* [GitHub Clients](#github-clients)
-  + [Metrics](#metrics)
-* [Background Jobs and Multi-Organization Operations](#background-jobs-and-multi-organization-operations)
-* [OAuth2](#oauth2)
-* [Stability and Versioning Guarantees](#stability-and-versioning-guarantees)
-* [Contributing](#contributing)
+- [Usage](#usage)
+  - [Examples](#examples)
+  - [Dependencies](#dependencies)
+- [Structured Logging](#structured-logging)
+- [GitHub Clients](#github-clients)
+  - [Metrics](#metrics)
+- [Background Jobs and Multi-Organization Operations](#background-jobs-and-multi-organization-operations)
+- [OAuth2](#oauth2)
+- [Stability and Versioning Guarantees](#stability-and-versioning-guarantees)
+- [Contributing](#contributing)
 
 ## Usage
 
@@ -34,7 +34,7 @@ func (h *CommentHandler) Handles() []string {
 }
 
 func (h *CommentHandler) Handle(ctx context.Context, eventType, deliveryID string, payload []byte) error {
-    // from github.com/google/go-github/github
+    // from github.com/google/go-github/v28/github
     var event github.IssueCommentEvent
     if err := json.Unmarshal(payload, &event); err != nil {
         return err
@@ -106,14 +106,14 @@ the `http.Request` context automatically.
 Below are the standard keys used when logging events. They are also exported as
 constants.
 
-| exported constant | key | definition |
-| ----------------- | --- | ---------- |
-| `LogKeyEventType` | `github_event_type` | the [github event type header](https://developer.github.com/webhooks/#delivery-headers) |
-| `LogKeyDeliveryID` | `github_delivery_id` | the [github event delivery id header](https://developer.github.com/webhooks/#delivery-headers) |
-| `LogKeyInstallationID` | `github_installation_id` | the [installation id the app is authenticating with](https://developer.github.com/apps/building-github-apps/authenticating-with-github-apps/#accessing-api-endpoints-as-a-github-app) |
-| `LogKeyRepositoryName` | `github_repository_name` | the repository name of the pull request being acted on |
-| `LogKeyRepositoryOwner` | `github_repository_owner` | the repository owner of the pull request being acted on |
-| `LogKeyPRNum` | `github_pr_num` | the number of the pull request being acted on |
+| exported constant       | key                       | definition                                                                                                                                                                            |
+| ----------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `LogKeyEventType`       | `github_event_type`       | the [github event type header](https://developer.github.com/webhooks/#delivery-headers)                                                                                               |
+| `LogKeyDeliveryID`      | `github_delivery_id`      | the [github event delivery id header](https://developer.github.com/webhooks/#delivery-headers)                                                                                        |
+| `LogKeyInstallationID`  | `github_installation_id`  | the [installation id the app is authenticating with](https://developer.github.com/apps/building-github-apps/authenticating-with-github-apps/#accessing-api-endpoints-as-a-github-app) |
+| `LogKeyRepositoryName`  | `github_repository_name`  | the repository name of the pull request being acted on                                                                                                                                |
+| `LogKeyRepositoryOwner` | `github_repository_owner` | the repository owner of the pull request being acted on                                                                                                                               |
+| `LogKeyPRNum`           | `github_pr_num`           | the number of the pull request being acted on                                                                                                                                         |
 
 Where appropriate, the library creates derived loggers with the above keys set
 to the correct values.
@@ -170,13 +170,13 @@ baseHandler, err := githubapp.NewDefaultCachingClientCreator(
 emit the metrics below if configured with the `githubapp.ClientMetrics`
 middleware.
 
-| metric name | type | definition |
-| ----------- | ---- | ---------- |
-| `github.requests` | `counter` | the count of successfully completed requests made to GitHub |
-| `github.requests.2xx` | `counter` | like `github.requests`, but only counting 2XX status codes |
-| `github.requests.3xx` | `counter` | like `github.requests`, but only counting 3XX status codes |
-| `github.requests.4xx` | `counter` | like `github.requests`, but only counting 4XX status codes |
-| `github.requests.5xx` | `counter` | like `github.requests`, but only counting 5XX status codes |
+| metric name           | type      | definition                                                  |
+| --------------------- | --------- | ----------------------------------------------------------- |
+| `github.requests`     | `counter` | the count of successfully completed requests made to GitHub |
+| `github.requests.2xx` | `counter` | like `github.requests`, but only counting 2XX status codes  |
+| `github.requests.3xx` | `counter` | like `github.requests`, but only counting 3XX status codes  |
+| `github.requests.4xx` | `counter` | like `github.requests`, but only counting 4XX status codes  |
+| `github.requests.5xx` | `counter` | like `github.requests`, but only counting 5XX status codes  |
 
 Note that metrics need to be published in order to be useful. Several
 [publishing options][] are available or you can implement your own.

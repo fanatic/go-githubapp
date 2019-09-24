@@ -210,7 +210,7 @@
   input-imports = [
     "github.com/alexedwards/scs",
     "github.com/bradleyfalzon/ghinstallation",
-    "github.com/google/go-github/github",
+    "github.com/google/go-github/v28/github",
     "github.com/hashicorp/golang-lru",
     "github.com/palantir/go-baseapp/baseapp",
     "github.com/pkg/errors",
