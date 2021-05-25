@@ -34,7 +34,7 @@ func (h *CommentHandler) Handles() []string {
 }
 
 func (h *CommentHandler) Handle(ctx context.Context, eventType, deliveryID string, payload []byte) error {
-    // from github.com/google/go-github/v28/github
+    // from github.com/google/go-github/v35/github
     var event github.IssueCommentEvent
     if err := json.Unmarshal(payload, &event); err != nil {
         return err

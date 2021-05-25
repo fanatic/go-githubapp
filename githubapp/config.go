@@ -20,7 +20,7 @@ type Config struct {
 	V4APIURL string `yaml:"v4_api_url" json:"v4ApiUrl"`
 
 	App struct {
-		IntegrationID int    `yaml:"integration_id" json:"integrationId"`
+		IntegrationID int64  `yaml:"integration_id" json:"integrationId"`
 		WebhookSecret string `yaml:"webhook_secret" json:"webhookSecret"`
 		PrivateKey    string `yaml:"private_key" json:"privateKey"`
 	} `yaml:"app" json:"app"`

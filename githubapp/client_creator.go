@@ -22,7 +22,7 @@ import (
 	"strings"
 
 	"github.com/bradleyfalzon/ghinstallation"
-	"github.com/google/go-github/v28/github"
+	"github.com/google/go-github/v35/github"
 	"github.com/pkg/errors"
 	"github.com/shurcooL/githubv4"
 	"golang.org/x/oauth2"
@@ -86,7 +86,7 @@ type ClientCreator interface {
 
 // NewClientCreator returns a ClientCreator that creates a GitHub client for
 // installations of the app specified by the provided arguments.
-func NewClientCreator(v3BaseURL, v4BaseURL string, integrationID int, privKeyBytes []byte, opts ...ClientOption) ClientCreator {
+func NewClientCreator(v3BaseURL, v4BaseURL string, integrationID int64, privKeyBytes []byte, opts ...ClientOption) ClientCreator {
 	cc := &clientCreator{
 		v3BaseURL:     v3BaseURL,
 		v4BaseURL:     v4BaseURL,
@@ -111,7 +111,7 @@ func NewClientCreator(v3BaseURL, v4BaseURL string, integrationID int, privKeyByt
 type clientCreator struct {
 	v3BaseURL     string
 	v4BaseURL     string
-	integrationID int
+	integrationID int64
 	privKeyBytes  []byte
 	userAgent     string
 	middleware    []ClientMiddleware
@@ -161,7 +161,7 @@ func (c *clientCreator) NewAppV4Client() (*githubv4.Client, error) {
 }
 
 func (c *clientCreator) NewInstallationClient(installationID int64) (*github.Client, error) {
-	itr, err := ghinstallation.New(http.DefaultTransport, c.integrationID, int(installationID), c.privKeyBytes)
+	itr, err := ghinstallation.New(http.DefaultTransport, c.integrationID, installationID, c.privKeyBytes)
 	if err != nil {
 		return nil, err
 	}
@@ -171,7 +171,7 @@ func (c *clientCreator) NewInstallationClient(installationID int64) (*github.Cli
 }
 
 func (c *clientCreator) NewInstallationV4Client(installationID int64) (*githubv4.Client, error) {
-	itr, err := ghinstallation.New(http.DefaultTransport, c.integrationID, int(installationID), c.privKeyBytes)
+	itr, err := ghinstallation.New(http.DefaultTransport, c.integrationID, installationID, c.privKeyBytes)
 	if err != nil {
 		return nil, err
 	}
